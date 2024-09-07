@@ -1,1 +1,2 @@
 import nextcord
+print("croissant")
