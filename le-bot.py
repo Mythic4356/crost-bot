@@ -11,3 +11,5 @@ intents.members=True
 bot = commands.Bot(command_prefix="quaso ", intents=intents)
 bot.remove_command("help")
 client = nextcord.Client(intents=intents)
+
+bot.run("")
