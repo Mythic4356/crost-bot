@@ -70,7 +70,7 @@ async def brick(ctx):
     parry_button.disabled=True
     print(parried)
     if parried:
-        await msg.edit("GOOD JOB U WON!!!", view=view, file=nextcord.File(f"bot-stuff/brick/7.png"))
+        await msg.edit("+ PARRIED", view=view, file=nextcord.File(f"bot-stuff/brick/7.png"))
         round += 1
     else:
         win = False
