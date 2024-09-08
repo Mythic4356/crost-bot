@@ -1,0 +1,25 @@
+name: Run Crost Bot
+
+on:
+  workflow_dispatch:
+
+env: 
+  token: ${{ secret.BOT_TOKEN }}
+
+jobs:
+  run-python:
+    runs-on: ubunutu-latest
+    steps:
+      name: Checkout Code
+      uses: actions/checkout@v3
+      
+      name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.13'
+
+      name: Run Python Script
+      run: |
+        pip install nextcord
+        python lebot.py
+    
