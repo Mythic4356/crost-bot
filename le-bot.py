@@ -31,4 +31,6 @@ client = nextcord.Client(intents=intents)
 async def on_ready():
     print(f'We have logged in as {bot.user}')
 
+
+
 bot.run(TOKEN)

@@ -1,0 +1,26 @@
+#body{
+    margin-left: 20%;
+    margin-right: 20%;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: tan;
+    height:100%;
+    text-align: center;
+    border-radius: 5%;
+    overflow-y:scroll;
+    margin-bottom: 0%;
+}
+body {
+    background-image: url("quaso1.png");
+    background-size: 5%;
+    background-repeat: repeat;
+}
+img { 
+    image-rendering: optimizeSpeed;             /* STOP SMOOTHING, GIVE ME SPEED  */
+    image-rendering: -moz-crisp-edges;          /* Firefox                        */
+    image-rendering: -o-crisp-edges;            /* Opera                          */
+    image-rendering: -webkit-optimize-contrast; /* Chrome (and eventually Safari) */
+    image-rendering: pixelated;                 /* Universal support since 2021   */
+    image-rendering: optimize-contrast;         /* CSS3 Proposed                  */
+    -ms-interpolation-mode: nearest-neighbor;   /* IE8+                           */
+
+}
