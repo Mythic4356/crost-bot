@@ -1,8 +1,9 @@
 import os
+import json
 import nextcord
 from nextcord.ext import commands
 from nextcord.ui import Button, View
-from nextcord import Interaction
+from nextcord import Interactionan
 from nextcord.abc import GuildChannel
 
 TOKEN = os.environ["token"]
