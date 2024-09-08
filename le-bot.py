@@ -42,19 +42,14 @@ async def on_ready():
 @bot.command()
 async def brick(ctx):
     parry_button = nextcord.ui.Button(label="Parry", style= nextcord.ButtonStyle.green,disabled=True )
-    quit_button = nextcord.ui.Button(label="Quit", style= nextcord.ButtonStyle.danger)
     round = 0
     view = nextcord.ui.View()
     view.add_item(parry_button)
-    view.add_item(quit_button)
     parried = False
     win = True
     
     embed = nextcord.Embed(title="Brick Tennis", description=f"Round: {round}")
     msg = await ctx.send(" ", view=view,embed=embed )
-    
-    async def quit_callback(interaction: Interaction):
-        win = False
 
     async def parry_callback(interaction:Interaction):
         nonlocal parried
@@ -92,9 +87,11 @@ async def brick(ctx):
             embed.description = f"Round: {round}\n imagine dying lmfao"
             embed.set_image( "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/heaven.jpg?raw=true")
         await msg.edit(view=view, embed=embed)
+        
         print("---")
         print(parried)
         print(win)
+        await asyncio.sleep(1)
         if win:
             for i in range(7):
                 embed.set_image( e[i*-1])
