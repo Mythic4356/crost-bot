@@ -60,7 +60,7 @@ async def brick(ctx):
         else:
             parry_button.disabled=True
             
-        await msg.edit(f"Round: {round}\n{e[i]}", view=view, file=nextcord.File(f"bot-stuff/brick/{e[i]}"))
+        await msg.edit(f"Round: {round}\n{e[i]}", view=view, file=nextcord.File(f"bot-stuff/brick/{e[i]}.png"))
         await asyncio.sleep(0.5)
 
     await asyncio.sleep(0.5)
@@ -71,16 +71,16 @@ async def brick(ctx):
     parry_button.disabled=True
     print(parried)
     if parried:
-        await msg.edit("GOOD JOB U WON!!!", view=view)
+        await msg.edit("GOOD JOB U WON!!!", view=view, file=nextcord.File(f"bot-stuff/brick/7.png"))
         round += 1
     else:
         win = False
-        await msg.edit("imagine losing", view=view)
+        await msg.edit("imagine losing", view=view, file=nextcord.File(f"bot-stuff/brick/heaven.jpg"))
 
     while win:
         parried = False
         for i in range(7):
-            await msg.edit(f"round: {round}\n{e[i*-1]}")
+            await msg.edit(f"round: {round}\n{e[i*-1]}",file=nextcord.File(f"bot-stuff/brick/{e[i*-1]}.png"))
             await asyncio.sleep(0.1)
             print(" yey")
         for i in range(7):
@@ -88,7 +88,7 @@ async def brick(ctx):
                 parry_button.disabled=False
             else:
                 parry_button.disabled=True
-            await msg.edit(f"round: {round}\n{e[i]}", view=view, file=nextcord.File(f"bot-stuff/brick/{e[i]}"))
+            await msg.edit(f"round: {round}\n{e[i]}", view=view, file=nextcord.File(f"bot-stuff/brick/{e[i]}.png"))
             await asyncio.sleep(0.5)
         await asyncio.sleep(0.5)
 
