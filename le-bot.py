@@ -12,4 +12,7 @@ bot = commands.Bot(command_prefix="quaso ", intents=intents)
 bot.remove_command("help")
 client = nextcord.Client(intents=intents)
 
-bot.run("")
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+
