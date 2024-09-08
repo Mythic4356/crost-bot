@@ -50,7 +50,6 @@ async def brick(ctx):
         await lock.acquire()
         parried=True
         lock.release()
-        print("yes")
 
     parry_button.callback= parry_callback
     for i in range(7):
@@ -80,9 +79,8 @@ async def brick(ctx):
     while win:
         parried = False
         for i in range(7):
-            await msg.edit(f"round: {round}\n{e[i*-1]}",file=nextcord.File(f"bot-stuff/brick/{e[i*-1]}.png"))
+            await msg.edit(f"round: {round}\n{e[i+1*-1]}",file=nextcord.File(f"bot-stuff/brick/{e[i*-1]}.png"))
             await asyncio.sleep(0.1)
-            print(" yey")
         for i in range(7):
             if i == 6:
                 parry_button.disabled=False
@@ -93,15 +91,10 @@ async def brick(ctx):
         await asyncio.sleep(0.5)
 
         parry_button.disabled=True
-        print(parried)
         if parried:
             round +=1
             await msg.edit("GOOD JOB U WON!!!", view=view)
         else:
             win = False
-            await msg.edit("imagine losing", view=view)
-
-    print(parried)
-
-    print("job dun")
+            await msg.edit("imagine losing", view=view, file=nextcord.File(f"bot-stuff/brick/heaven.jpg"))
 bot.run(TOKEN)
