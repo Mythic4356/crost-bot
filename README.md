@@ -7,7 +7,7 @@ and play games yipee
 
 <h2>TERMS OF SERVICE AGREEMENT</h2>
 
-This Terms of Service Agreement (the "Agreement") is entered into between Mythic4356 and Da_anya (not real names) ("Bot Owners") and the user ("User") of the [Bot Name] Discord bot (Crost).
+This Terms of Service Agreement (the "Agreement") is entered into between Mythic4356 and Da_anya (not real names) ("Bot Owners") and the user ("User") of the Crost Discord bot (The "Bot").
 
 By using the Bot, the User agrees to be bound by the terms of this Agreement. If the User does not agree to the terms of this Agreement, they should immediately discontinue use of the Bot.
 
