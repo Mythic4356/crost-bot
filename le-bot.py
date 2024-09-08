@@ -26,7 +26,14 @@ bot = commands.Bot(command_prefix="quaso ", intents=intents)
 bot.remove_command("help")
 client = nextcord.Client(intents=intents)
 
-e = ["0","1","2","3","4","5","6"]
+e = ["https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/0.png?raw=true",
+     "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/1.png?raw=true",
+     "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/2.png?raw=true",
+    "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/3.png?raw=true",
+    "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/4.png?raw=true",
+    "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/5.png?raw=true",
+    "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/6.png?raw=true",
+    ]
 
 @bot.event
 async def on_ready():
@@ -42,7 +49,12 @@ async def brick(ctx):
     view.add_item(quit_button)
     parried = False
     win = True
-    msg = await ctx.send("insert funny brick game haha", view=view)
+    
+    embed = nextcord.Embed(title="Brick Tennis", description=f"Round: {round}")
+    msg = await ctx.send(" ", view=view,embed=embed )
+    
+    async def quit_callback(interaction: Interaction):
+        win = False
 
     async def parry_callback(interaction:Interaction):
         nonlocal parried
@@ -52,49 +64,41 @@ async def brick(ctx):
         lock.release()
 
     parry_button.callback= parry_callback
-    for i in range(7):
-        if i == 6:
-            parry_button.disabled=False
-            
-        else:
-            parry_button.disabled=True
-            
-        await msg.edit(f"Round: {round}\n{e[i]}", view=view, file=nextcord.File(f"bot-stuff/brick/{e[i]}.png"))
-        await asyncio.sleep(0.5)
-
-    await asyncio.sleep(0.5)
-    
-
-
-    
-    parry_button.disabled=True
-    print(parried)
-    if parried:
-        await msg.edit("+ PARRIED", view=view, file=nextcord.File(f"bot-stuff/brick/7.png"))
-        round += 1
-    else:
-        win = False
-        await msg.edit("imagine losing", view=view, file=nextcord.File(f"bot-stuff/brick/heaven.jpg"))
 
     while win:
         parried = False
         for i in range(7):
-            await msg.edit(f"round: {round}\n{e[i+1*-1]}",file=nextcord.File(f"bot-stuff/brick/{e[i*-1]}.png"))
-            await asyncio.sleep(0.1)
-        for i in range(7):
             if i == 6:
                 parry_button.disabled=False
+                embed.description = f"Round: {round}\n PARRY NOW!"
             else:
                 parry_button.disabled=True
-            await msg.edit(f"round: {round}\n{e[i]}", view=view, file=nextcord.File(f"bot-stuff/brick/{e[i]}.png"))
+                embed.description = f"Round: {round}"
+            embed.set_image( e[i])
+            await msg.edit(view=view, embed=embed)
             await asyncio.sleep(0.5)
+            print("think fast chucklenuts")
         await asyncio.sleep(0.5)
 
         parry_button.disabled=True
+        print(parried)
+        print(win)
         if parried:
-            round +=1
-            await msg.edit("GOOD JOB U WON!!!", view=view)
+            round += 1
+            embed.description = f"Round: {round}\n+ PARRY"
+            embed.set_image( "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/7.png?raw=true",)
         else:
             win = False
-            await msg.edit("imagine losing", view=view, file=nextcord.File(f"bot-stuff/brick/heaven.jpg"))
+            embed.description = f"Round: {round}\n imagine dying lmfao"
+            embed.set_image( "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/heaven.jpg?raw=true")
+        await msg.edit(view=view, embed=embed)
+        print("---")
+        print(parried)
+        print(win)
+        if win:
+            for i in range(7):
+                embed.set_image( e[i*-1])
+                await msg.edit(view=view,embed=embed)
+                await asyncio.sleep(0.1)
+                print("rebound")
 bot.run(TOKEN)
