@@ -3,7 +3,8 @@ import json
 import nextcord
 from nextcord.ext import commands
 from nextcord.ui import Button, View
-from nextcord import Interaction
+from nextcord import Interaction,application_command
+from nextcord import slash_command
 from nextcord.abc import GuildChannel
 import asyncio
 import PIL
@@ -45,11 +46,13 @@ async def site(ctx):
 
 brick_players = []
 
-@bot.command()
-async def brick(ctx):
-    if ctx.author.id in brick_players:
 
-        brick_players.append(ctx.author.id)
+
+@bot.user_command()
+async def brick(ctx):
+    if not ctx.user.id in brick_players:
+
+        brick_players.append(ctx.user.id)
         parry_button = nextcord.ui.Button(label="Parry", style= nextcord.ButtonStyle.green,disabled=True )
         round = 0
         view = nextcord.ui.View()
@@ -95,6 +98,7 @@ async def brick(ctx):
                 win = False
                 embed.description = f"Round: {round}\n imagine dying lmfao"
                 embed.set_image( "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/heaven.jpg?raw=true")
+                brick_players.remove(ctx.user.id)
             await msg.edit(view=view, embed=embed)
         
             print("---")
@@ -108,5 +112,6 @@ async def brick(ctx):
                     await asyncio.sleep(0.1)
                     print("rebound")
     else:
-        ctx.reply("You already have an ongoing game!")
+        print(brick_players)
+        await ctx.send("You already have an ongoing game!")
 bot.run(TOKEN)
