@@ -47,10 +47,9 @@ async def site(ctx):
 async def ping(interaction: Interaction):
     await interaction.response.send_message("Pong!")
 
-@bot.command(description="Play a game that will give you dementia")
-brick_players = []
 
-@bot.command()
+
+@bot.command(description="Play a game that will give you dementia")
 async def brick(ctx):
     if ctx.author.id in brick_players:
 
