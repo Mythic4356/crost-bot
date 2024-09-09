@@ -43,7 +43,7 @@ async def on_ready():
 async def site(ctx):
     msg = await ctx.send("Visit us in\nhttps://mythic4356.github.io/crost-bot/")
 
-@bot.user_command(description="Ping command")
+@bot.user_command()
 async def ping(interaction: Interaction):
     await interaction.response.send_message("Pong!")
 
