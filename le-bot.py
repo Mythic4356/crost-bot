@@ -48,62 +48,70 @@ async def ping(interaction: Interaction):
     await interaction.response.send_message("Pong!")
 
 @bot.command(description="Play a game that will give you dementia")
+brick_players = []
+
+@bot.command()
 async def brick(ctx):
-    parry_button = nextcord.ui.Button(label="Parry", style= nextcord.ButtonStyle.green,disabled=True )
-    round = 0
-    view = nextcord.ui.View()
-    view.add_item(parry_button)
-    parried = False
-    win = True
-    
-    embed = nextcord.Embed(title="Brick Tennis", description=f"Round: {round}")
-    msg = await ctx.send(" ", view=view,embed=embed )
+    if ctx.author.id in brick_players:
 
-    async def parry_callback(interaction:Interaction):
-        nonlocal parried
-        lock = asyncio.Lock()
-        await lock.acquire()
-        parried=True
-        lock.release()
-    
-    parry_button.callback= parry_callback
-
-    while win:
+        brick_players.append(ctx.author.id)
+        parry_button = nextcord.ui.Button(label="Parry", style= nextcord.ButtonStyle.green,disabled=True )
+        round = 0
+        view = nextcord.ui.View()
+        view.add_item(parry_button)
         parried = False
-        for i in range(7):
-            if i == 6:
-                parry_button.disabled=False
-                embed.description = f"Round: {round}\n PARRY NOW!"
-            else:
-                parry_button.disabled=True
-                embed.description = f"Round: {round}"
-            embed.set_image( e[i])
-            await msg.edit(view=view, embed=embed)
-            await asyncio.sleep(0.5)
-            print("think fast chucklenuts")
-        await asyncio.sleep(0.5)
+        win = True
+    
+        embed = nextcord.Embed(title="Brick Tennis", description=f"Round: {round}")
+        msg = await ctx.send(" ", view=view,embed=embed )
 
-        parry_button.disabled=True
-        print(parried)
-        print(win)
-        if parried:
-            round += 1
-            embed.description = f"Round: {round}\n+ PARRY"
-            embed.set_image( "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/7.png?raw=true",)
-        else:
-            win = False
-            embed.description = f"Round: {round}\n imagine dying lmfao"
-            embed.set_image( "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/heaven.jpg?raw=true")
-        await msg.edit(view=view, embed=embed)
-        
-        print("---")
-        print(parried)
-        print(win)
-        await asyncio.sleep(1)
-        if win:
+        async def parry_callback(interaction:Interaction):
+            nonlocal parried
+            lock = asyncio.Lock()
+            await lock.acquire()
+            parried=True
+            lock.release()
+    
+        parry_button.callback= parry_callback
+
+        while win:
+            parried = False
             for i in range(7):
-                embed.set_image( e[i*-1])
-                await msg.edit(view=view,embed=embed)
-                await asyncio.sleep(0.1)
-                print("rebound")
+                if i == 6:
+                    parry_button.disabled=False
+                    embed.description = f"Round: {round}\n PARRY NOW!"
+                else:
+                    parry_button.disabled=True
+                    embed.description = f"Round: {round}"
+                embed.set_image( e[i])
+                await msg.edit(view=view, embed=embed)
+                await asyncio.sleep(0.5)
+                print("think fast chucklenuts")
+            await asyncio.sleep(0.5)
+
+            parry_button.disabled=True
+            print(parried)
+            print(win)
+            if parried:
+                round += 1
+                embed.description = f"Round: {round}\n+ PARRY"
+                embed.set_image( "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/7.png?raw=true",)
+            else:
+                win = False
+                embed.description = f"Round: {round}\n imagine dying lmfao"
+                embed.set_image( "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/heaven.jpg?raw=true")
+            await msg.edit(view=view, embed=embed)
+        
+            print("---")
+            print(parried)
+            print(win)
+            await asyncio.sleep(1)
+            if win:
+                for i in range(7):
+                    embed.set_image( e[i*-1])
+                    await msg.edit(view=view,embed=embed)
+                    await asyncio.sleep(0.1)
+                    print("rebound")
+    else:
+        ctx.reply("You already have an ongoing game!")
 bot.run(TOKEN)
