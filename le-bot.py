@@ -40,6 +40,10 @@ async def on_ready():
     print(f'We have logged in as {bot.user}')
 
 @bot.command()
+async def Site(ctx):
+    msg = await ctx.send("Visit us in\nhttps://mythic4356.github.io/crost-bot/")
+
+@bot.command()
 async def brick(ctx):
     parry_button = nextcord.ui.Button(label="Parry", style= nextcord.ButtonStyle.green,disabled=True )
     round = 0
