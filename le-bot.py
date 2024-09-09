@@ -40,7 +40,7 @@ async def on_ready():
     print(f'We have logged in as {bot.user}')
 
 @bot.command()
-async def Site(ctx):
+async def site(ctx):
     msg = await ctx.send("Visit us in\nhttps://mythic4356.github.io/crost-bot/")
 
 brick_players = []
