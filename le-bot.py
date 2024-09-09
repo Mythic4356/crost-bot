@@ -52,7 +52,7 @@ async def ping(interaction: Interaction):
 @bot.command(description="Play a game that will give you dementia")
 async def brick(ctx):
     if ctx.author.id in brick_players:
-
+        brick_players = []
         brick_players.append(ctx.author.id)
         parry_button = nextcord.ui.Button(label="Parry", style= nextcord.ButtonStyle.green,disabled=True )
         round = 0
