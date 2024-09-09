@@ -3,7 +3,7 @@ import json
 import nextcord
 from nextcord.ext import commands
 from nextcord.ui import Button, View
-from nextcord import Interaction
+from nextcord import Interaction, SlashOption
 from nextcord.abc import GuildChannel
 import asyncio
 import PIL
@@ -43,7 +43,11 @@ async def on_ready():
 async def site(ctx):
     msg = await ctx.send("Visit us in\nhttps://mythic4356.github.io/crost-bot/")
 
-@bot.command()
+@bot.slash_command(description="Ping command")
+async def ping(interaction: Interaction):
+    await interaction.response.send_message("Pong!")
+
+@bot.command(description="Play a game that will give you dementia")
 async def brick(ctx):
     parry_button = nextcord.ui.Button(label="Parry", style= nextcord.ButtonStyle.green,disabled=True )
     round = 0
