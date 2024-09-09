@@ -26,13 +26,13 @@ bot = commands.Bot(command_prefix="quaso ", intents=intents)
 bot.remove_command("help")
 client = nextcord.Client(intents=intents)
 
-e = ["https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/0.png?raw=true",
-     "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/1.png?raw=true",
-     "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/2.png?raw=true",
-    "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/3.png?raw=true",
-    "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/4.png?raw=true",
-    "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/5.png?raw=true",
-    "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/6.png?raw=true",
+e = ["https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/0.png?raw=true",
+     "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/1.png?raw=true",
+     "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/2.png?raw=true",
+    "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/3.png?raw=true",
+    "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/4.png?raw=true",
+    "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/5.png?raw=true",
+    "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/6.png?raw=true",
     ]
 
 @bot.event
@@ -57,7 +57,7 @@ async def brick(ctx):
         await lock.acquire()
         parried=True
         lock.release()
-
+    
     parry_button.callback= parry_callback
 
     while win:
@@ -81,11 +81,11 @@ async def brick(ctx):
         if parried:
             round += 1
             embed.description = f"Round: {round}\n+ PARRY"
-            embed.set_image( "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/7.png?raw=true",)
+            embed.set_image( "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/7.png?raw=true",)
         else:
             win = False
             embed.description = f"Round: {round}\n imagine dying lmfao"
-            embed.set_image( "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/heaven.jpg?raw=true")
+            embed.set_image( "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/heaven.jpg?raw=true")
         await msg.edit(view=view, embed=embed)
         
         print("---")
