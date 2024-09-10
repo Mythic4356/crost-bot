@@ -4,10 +4,11 @@ import nextcord
 from nextcord.ext import commands
 from nextcord.ui import Button, View
 from nextcord import Interaction,application_command,SlashOption
-from nextcord import slash_command
-from nextcord.abc import GuildChannel
+from nextcord import slash_command,InteractionResponseType, integrations
+from nextcord.abc import GuildChannel   
 import asyncio
 import PIL
+
 
 try:
     
@@ -51,7 +52,7 @@ async def ping(interaction: Interaction):
 brick_players = []
 
 
-@bot.user_command()
+@bot.slash_command()
 async def brick(ctx):
     if not ctx.user.id in brick_players:
 
