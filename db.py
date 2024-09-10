@@ -24,5 +24,3 @@ def load(path: str):
         return ref.get()
     except:
         print(f"Unable to load data at path '{path}'")
-
-save('quaso/cat',"CROISSANTS")
