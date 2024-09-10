@@ -5,6 +5,7 @@ from nextcord.ext import commands
 from nextcord.ui import Button, View
 from nextcord import Interaction,application_command,SlashOption
 from nextcord import slash_command
+from modules.Constants import TimeLeft,brickImages
 from nextcord.abc import GuildChannel
 import asyncio
 import PIL
@@ -27,14 +28,7 @@ bot = commands.Bot(command_prefix="quaso ", intents=intents)
 bot.remove_command("help")
 client = nextcord.Client(intents=intents)
 
-e = ["https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/0.png?raw=true",
-     "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/1.png?raw=true",
-     "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/2.png?raw=true",
-    "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/3.png?raw=true",
-    "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/4.png?raw=true",
-    "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/5.png?raw=true",
-    "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/6.png?raw=true",
-    ]
+
 
 @bot.event
 async def on_ready():
@@ -51,8 +45,10 @@ async def ping(interaction: Interaction):
 brick_players = []
 
 
+
 @bot.user_command()
 async def brick(ctx):
+    e = brickImages
     if not ctx.user.id in brick_players:
 
         brick_players.append(ctx.user.id)
