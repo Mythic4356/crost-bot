@@ -44,7 +44,9 @@ async def ping(interaction: Interaction):
 
 brick_players = []
 
-
+@bot.user_command()
+async def feed():
+    await Interaction.response.send_message("Later")
 
 @bot.user_command()
 async def brick(ctx):

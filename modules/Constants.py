@@ -15,3 +15,8 @@ class TimeLeft(Enum):
     day = 1440
     three_days = 4320
     week = 10080
+
+apolagy = [
+    "sorry but the command is not usable yet",
+    "command work in progress"
+]
