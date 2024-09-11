@@ -11,6 +11,7 @@ import asyncio
 from PIL import ImageDraw, Image, ImageFont
 from pilmoji import Pilmoji
 import requests
+import db
 
 
 try:
@@ -31,19 +32,33 @@ bot = commands.Bot(command_prefix="quaso ", intents=intents)
 bot.remove_command("help")
 client = nextcord.Client(intents=intents)
 
-
+def check(userid):
+    if db.load(f"users/{userid}") == False:
+        db.save(f"users/{userid}", 
+                {
+                    "croissants": 0
+                }
+            )
+        return False
+    else:
+        return True
+    
 
 @bot.event
 async def on_ready():
     print(f'We have logged in as {bot.user}')
 
-@bot.command(description="Create a new victim")
-async def new(ctx : Interaction):
-    msg = await ctx.message.reply("New User fr?????")
+@bot.slash_command
+async def bake(ctx):
+    userid = ctx.user.id
+    check(userid)
+    db.save(f"users/{userid}/croissants", (db.load(f"users/{userid}/croissants") + 1))
 
 
 
-@bot.command()
+
+
+@bot.slash_command()
 async def site(ctx):
     msg = await ctx.send("Visit us in\nhttps://mythic4356.github.io/crost-bot/")
 
