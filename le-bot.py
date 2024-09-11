@@ -8,7 +8,9 @@ from nextcord import slash_command,InteractionResponseType, integrations
 from nextcord.abc import GuildChannel   
 from modules.Constants import TimeLeft,brickImages
 import asyncio
-import PIL
+from PIL import ImageDraw, Image, ImageFont
+from pilmoji import Pilmoji
+import requests
 
 
 try:
@@ -48,6 +50,13 @@ brick_players = []
 @bot.user_command()
 async def feed():
     await Interaction.response.send_message("Later")
+
+@bot.slash_command()
+async def petpet(ctx, user: nextcord.Member = None):
+    if user == None:
+        user = ctx.user.id
+    
+    img = Image(requests.get(user.avatar.url,stream=True).raw)
 
 @bot.slash_command()
 async def brick(ctx):
