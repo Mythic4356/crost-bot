@@ -1,0 +1,8 @@
+
+class User:
+    def __init__(id):
+        self.id = id
+        self.crosiants = 0
+
+    def __str__():
+        return id.__str__

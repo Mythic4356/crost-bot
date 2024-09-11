@@ -37,6 +37,12 @@ client = nextcord.Client(intents=intents)
 async def on_ready():
     print(f'We have logged in as {bot.user}')
 
+@bot.command(description="Create a new victim")
+async def new(ctx : Interaction):
+    msg = await ctx.message.reply("New User fr?????")
+
+
+
 @bot.command()
 async def site(ctx):
     msg = await ctx.send("Visit us in\nhttps://mythic4356.github.io/crost-bot/")
