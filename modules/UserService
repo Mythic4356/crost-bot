@@ -3,6 +3,8 @@ class User:
     def __init__(id):
         self.id = id
         self.crosiants = 0
+        self.xp = 0
+        self.level = 0
 
     def __str__():
         return id.__str__
