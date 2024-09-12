@@ -39,7 +39,9 @@ async def on_ready():
 async def new(ctx : Interaction):
     msg = await ctx.message.reply("New User fr?????")
 
-
+@bot.user_command()
+async def Pat(ctx : Interaction):
+    
 
 @bot.command()
 async def site(ctx):
