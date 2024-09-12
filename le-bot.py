@@ -1,11 +1,11 @@
 import os
 import json
-import nextcord
-from nextcord.ext import commands
-from nextcord.ui import Button, View
-from nextcord import Interaction,application_command,SlashOption
-from nextcord import slash_command,InteractionResponseType, integrations
-from nextcord.abc import GuildChannel   
+import discord
+from discord.ext import commands
+from discord.ui import Button, View
+from discord import Interaction,app_commands
+from discord import InteractionResponseType, integrations
+from discord.abc import GuildChannel   
 from modules.Constants import TimeLeft,brickImages
 import asyncio
 from PIL import ImageDraw, Image, ImageFont
@@ -15,7 +15,6 @@ import db
 
 
 try:
-    
     TOKEN = os.environ["token"]
     print("Token loaded from environment")
 except:
@@ -25,12 +24,13 @@ except:
     except:
         print("No Token found from environment or config")
 
-intents = nextcord.Intents.default()
+
+intents = discord.Intents.default()
 intents.message_content = True
 intents.members=True
 bot = commands.Bot(command_prefix="quaso ", intents=intents)
 bot.remove_command("help")
-client = nextcord.Client(intents=intents)
+client = discord.Client(intents=intents)
 
 def check(userid):
     if db.load(f"users/{userid}") == False:
@@ -47,8 +47,10 @@ def check(userid):
 @bot.event
 async def on_ready():
     print(f'We have logged in as {bot.user}')
+    await bot.tree.sync()
+    print(f"synced slash commands for {bot.user}")
 
-@bot.slash_command
+@bot.hybrid_command
 async def bake(ctx):
     userid = ctx.user.id
     check(userid)
@@ -58,41 +60,38 @@ async def bake(ctx):
 
 
 
-@bot.slash_command()
-async def site(ctx):
+@bot.hybrid_command(name="site",with_app_command= True, description="Visit Our Site!")
+async def site(ctx: commands.Context):
     msg = await ctx.send("Visit us in\nhttps://mythic4356.github.io/crost-bot/")
 
-@bot.slash_command(description="p i n g")
-async def ping(interaction: Interaction):
-    await interaction.response.send_message("Pong!")
+@bot.hybrid_command(description="p i n g")
+async def ping(ctx: commands.Context):
+    await ctx.response.send_message("Pong!")
 
 brick_players = []
 
-@bot.user_command()
-async def feed():
+@bot.hybrid_command(name="feed",with_app_command= True, description="Feed da gremlin")
+async def feed(ctx: commands.Context):
     await Interaction.response.send_message("Later")
 
-@bot.slash_command()
-async def petpet(ctx, user: nextcord.Member = None):
-    if user == None:
-        user = ctx.user.id
-    
-    img = Image(requests.get(user.avatar.url,stream=True).raw)
+@bot.hybrid_command(name="petpet",with_app_command= True, description="W.I.P")
+async def petpet(ctx: commands.Context, user: discord.Member = None):
+    pass
 
-@bot.slash_command()
-async def brick(ctx):
+@bot.hybrid_command(name="brick",with_app_command= True, description="Play brick tennis with quaso cat")
+async def brick(ctx: commands.Context):
     e = brickImages
-    if not ctx.user.id in brick_players:
+    if not ctx.author.id in brick_players:
 
-        brick_players.append(ctx.user.id)
-        parry_button = nextcord.ui.Button(label="Parry", style= nextcord.ButtonStyle.green,disabled=True )
+        brick_players.append(ctx.author.id)
+        parry_button = discord.ui.Button(label="Parry", style= discord.ButtonStyle.green,disabled=True )
         round = 0
-        view = nextcord.ui.View()
+        view = discord.ui.View()
         view.add_item(parry_button)
         parried = False
         win = True
     
-        embed = nextcord.Embed(title="Brick Tennis", description=f"Round: {round}")
+        embed = discord.Embed(title="Brick Tennis", description=f"Round: {round}")
         msg = await ctx.send(" ", view=view,embed=embed )
 
         async def parry_callback(interaction:Interaction):
