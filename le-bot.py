@@ -49,6 +49,11 @@ async def on_ready():
     await bot.tree.sync()
     print(f"synced slash commands for {bot.user}")
 
+
+
+@app_commands.user_install()
+@app_commands.allowed_installs(guilds=True, users=True)
+@app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @bot.hybrid_command
 async def bake(ctx):
     userid = ctx.user.id
@@ -56,24 +61,46 @@ async def bake(ctx):
     db.save(f"users/{userid}/croissants", (db.load(f"users/{userid}/croissants") + 1))
 
 
+
+@app_commands.user_install()
+@app_commands.allowed_installs(guilds=True, users=True)
+@app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @bot.hybrid_command(name="site",with_app_command= True, description="Visit Our Site!")
 async def site(ctx: commands.Context):
     msg = await ctx.send("Visit us in\nhttps://mythic4356.github.io/crost-bot/")
 
+
+
+@app_commands.user_install()
+@app_commands.allowed_installs(guilds=True, users=True)
+@app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @bot.hybrid_command(description="p i n g")
 async def ping(ctx: commands.Context):
     await ctx.response.send_message("Pong!")
 
-brick_players = []
 
+
+
+@app_commands.user_install()
+@app_commands.allowed_installs(guilds=True, users=True)
+@app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @bot.hybrid_command(name="feed",with_app_command= True, description="Feed da gremlin")
 async def feed(ctx: commands.Context):
-    await Interaction.response.send_message("Later")
+    await ctx.reply("Later", ephemeral= True)
 
+
+@app_commands.user_install()
+@app_commands.allowed_installs(guilds=True, users=True)
+@app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @bot.hybrid_command(name="petpet",with_app_command= True, description="W.I.P")
 async def petpet(ctx: commands.Context, user: discord.Member = None):
     pass
 
+brick_players = []
+
+@app_commands.user_install()
+@app_commands.allowed_installs(guilds=True, users=True)
+@app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @bot.hybrid_command(name="brick",with_app_command= True, description="Play brick tennis with quaso cat")
 async def brick(ctx: commands.Context):
     e = brickImages
@@ -108,7 +135,7 @@ async def brick(ctx: commands.Context):
                 else:
                     parry_button.disabled=True
                     embed.description = f"Round: {round}"
-                embed.set_image( e[i])
+                embed.set_image(url=e[i])
                 await msg.edit(view=view, embed=embed)
                 await asyncio.sleep(0.5)
                 print("think fast chucklenuts")
@@ -120,11 +147,11 @@ async def brick(ctx: commands.Context):
             if parried:
                 round += 1
                 embed.description = f"Round: {round}\n+ PARRY"
-                embed.set_image( "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/7.png?raw=true",)
+                embed.set_image(url="https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/7.png?raw=true",)
             else:
                 win = False
                 embed.description = f"Round: {round}\n imagine dying lmfao"
-                embed.set_image( "https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/heaven.jpg?raw=true")
+                embed.set_image(url="https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/heaven.jpg?raw=true")
                 brick_players.remove(ctx.user.id)
             await msg.edit(view=view, embed=embed)
         
@@ -134,7 +161,7 @@ async def brick(ctx: commands.Context):
             await asyncio.sleep(1)
             if win:
                 for i in range(7):
-                    embed.set_image( e[i*-1])
+                    embed.set_image(url=e[i])
                     await msg.edit(view=view,embed=embed)
                     await asyncio.sleep(0.1)
                     print("rebound")
