@@ -48,12 +48,18 @@ async def on_ready():
     await bot.tree.sync()
     print(f"synced slash commands for {bot.user}")
 
-
+@app_commands.user_install()
+@app_commands.allowed_installs(guilds=True, users=True)
+@app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
+@bot.tree.command(description="ora")
+async def uwu(ctx:Interaction):
+    print("ez")
+    msg = await ctx.response.send_message("OwO")
 
 @app_commands.user_install()
 @app_commands.allowed_installs(guilds=True, users=True)
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
-@bot.hybrid_command
+@bot.hybrid_command(name="bake")
 async def bake(ctx):
     userid = ctx.user.id
     check(userid)
