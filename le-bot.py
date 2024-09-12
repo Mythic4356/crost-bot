@@ -13,7 +13,6 @@ from pilmoji import Pilmoji
 import requests
 import db
 
-
 try:
     
     TOKEN = os.environ["token"]
@@ -53,11 +52,6 @@ async def bake(ctx):
     userid = ctx.user.id
     check(userid)
     db.save(f"users/{userid}/croissants", (db.load(f"users/{userid}/croissants") + 1))
-
-@bot.user_command()
-async def Pat(ctx : Interaction):
-    
-
 
 
 @bot.slash_command()
