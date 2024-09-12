@@ -9,7 +9,6 @@ from discord.abc import GuildChannel
 from modules.Constants import TimeLeft,brickImages
 import asyncio
 from PIL import ImageDraw, Image, ImageFont
-from pilmoji import Pilmoji
 import requests
 import db
 
