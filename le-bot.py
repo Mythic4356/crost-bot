@@ -8,7 +8,10 @@ from nextcord import slash_command,InteractionResponseType, integrations
 from nextcord.abc import GuildChannel   
 from modules.Constants import TimeLeft,brickImages
 import asyncio
-import PIL
+from PIL import ImageDraw, Image, ImageFont
+from pilmoji import Pilmoji
+import requests
+import db
 
 
 try:
@@ -29,21 +32,35 @@ bot = commands.Bot(command_prefix="quaso ", intents=intents)
 bot.remove_command("help")
 client = nextcord.Client(intents=intents)
 
-
+def check(userid):
+    if db.load(f"users/{userid}") == False:
+        db.save(f"users/{userid}", 
+                {
+                    "croissants": 0
+                }
+            )
+        return False
+    else:
+        return True
+    
 
 @bot.event
 async def on_ready():
     print(f'We have logged in as {bot.user}')
 
-@bot.command(description="Create a new victim")
-async def new(ctx : Interaction):
-    msg = await ctx.message.reply("New User fr?????")
+@bot.slash_command
+async def bake(ctx):
+    userid = ctx.user.id
+    check(userid)
+    db.save(f"users/{userid}/croissants", (db.load(f"users/{userid}/croissants") + 1))
 
 @bot.user_command()
 async def Pat(ctx : Interaction):
     
 
-@bot.command()
+
+
+@bot.slash_command()
 async def site(ctx):
     msg = await ctx.send("Visit us in\nhttps://mythic4356.github.io/crost-bot/")
 
@@ -56,6 +73,13 @@ brick_players = []
 @bot.user_command()
 async def feed():
     await Interaction.response.send_message("Later")
+
+@bot.slash_command()
+async def petpet(ctx, user: nextcord.Member = None):
+    if user == None:
+        user = ctx.user.id
+    
+    img = Image(requests.get(user.avatar.url,stream=True).raw)
 
 @bot.slash_command()
 async def brick(ctx):
