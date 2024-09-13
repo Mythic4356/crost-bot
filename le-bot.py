@@ -7,7 +7,6 @@ from discord import Interaction,app_commands
 from discord import InteractionResponseType, integrations
 from discord.abc import GuildChannel   
 from modules.Constants import TimeLeft,brickImages
-from modules.cmds import *
 import asyncio
 from PIL import ImageDraw, Image, ImageFont
 import requests
@@ -32,8 +31,8 @@ bot.remove_command("help")
 client = discord.Client(intents=intents)
 
 def check(userid):
-    if db.load(f"users/{userid}") == False:
-        db.save(f"users/{userid}", 
+    if modules.db.load(f"users/{userid}") == False:
+        modules.db.save(f"users/{userid}", 
                 {
                     "croissants": 0
                 }
@@ -55,7 +54,7 @@ async def on_ready():
 @bot.tree.command(description="ora")
 async def uwu(ctx:Interaction):
     print("ez")
-    msg = await ctx.response.send_message("OwO")
+    msg = await ctx.response.response.send_message_message("OwO")
 
 @app_commands.user_install()
 @app_commands.allowed_installs(guilds=True, users=True)
@@ -63,35 +62,28 @@ async def uwu(ctx:Interaction):
 @bot.tree.command(description="show the site")
 async def sites(ctx:Interaction):
     print("ez")
-    msg = await ctx.response.send_message("Visit us in\nhttps://mythic4356.github.io/crost-bot/")
+    msg = await ctx.response.response.send_message_message("Visit us in\nhttps://mythic4356.github.io/crost-bot/")
 
 
 @app_commands.user_install()
 @app_commands.allowed_installs(guilds=True, users=True)
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
-@bot.hybrid_command(name="bake")
+@bot.tree.command(name="bake")
 async def bake(ctx):
     userid = ctx.user.id
     check(userid)
-    db.save(f"users/{userid}/croissants", (db.load(f"users/{userid}/croissants") + 1))
+    modules.db.save(f"users/{userid}/croissants", (modules.db.load(f"users/{userid}/croissants") + 1))
 
 
-
-@app_commands.user_install()
-@app_commands.allowed_installs(guilds=True, users=True)
-@app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
-@bot.hybrid_command(name="site",with_app_command= True, description="Visit Our Site!")
-async def site(ctx: commands.Context):
-    modules.cmds.site()
 
 
 
 @app_commands.user_install()
 @app_commands.allowed_installs(guilds=True, users=True)
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
-@bot.hybrid_command(description="p i n g")
+@bot.tree.command(description="p i n g")
 async def ping(ctx: commands.Context):
-    await ctx.response.send_message("Pong!")
+    await ctx.response.response.send_message_message("Pong!")
 
 
 
@@ -99,7 +91,7 @@ async def ping(ctx: commands.Context):
 @app_commands.user_install()
 @app_commands.allowed_installs(guilds=True, users=True)
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
-@bot.hybrid_command(name="feed",with_app_command= True, description="Feed da gremlin")
+@bot.tree.command(name="feed", description="Feed da gremlin")
 async def feed(ctx: commands.Context):
     await ctx.reply("Later", ephemeral= True)
 
@@ -107,7 +99,7 @@ async def feed(ctx: commands.Context):
 @app_commands.user_install()
 @app_commands.allowed_installs(guilds=True, users=True)
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
-@bot.hybrid_command(name="petpet",with_app_command= True, description="W.I.P")
+@bot.tree.command(name="petpet", description="W.I.P")
 async def petpet(ctx: commands.Context, user: discord.Member = None):
     pass
 
@@ -116,12 +108,12 @@ brick_players = []
 @app_commands.user_install()
 @app_commands.allowed_installs(guilds=True, users=True)
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
-@bot.hybrid_command(name="brick",with_app_command= True, description="Play brick tennis with quaso cat")
+@bot.tree.command(name="brick", description="Play brick tennis with quaso cat")
 async def brick(ctx: commands.Context):
     e = brickImages
-    if not ctx.author.id in brick_players:
+    if not ctx.user.id in brick_players:
 
-        brick_players.append(ctx.author.id)
+        brick_players.append(ctx.user.id)
         parry_button = discord.ui.Button(label="Parry", style= discord.ButtonStyle.green,disabled=True )
         round = 0
         view = discord.ui.View()
@@ -130,7 +122,8 @@ async def brick(ctx: commands.Context):
         win = True
     
         embed = discord.Embed(title="Brick Tennis", description=f"Round: {round}")
-        msg = await ctx.send(" ", view=view,embed=embed )
+        msg = ctx.response
+        await msg.send_message(" ", view=view,embed=embed )
 
         async def parry_callback(interaction:Interaction):
             nonlocal parried
@@ -151,7 +144,7 @@ async def brick(ctx: commands.Context):
                     parry_button.disabled=True
                     embed.description = f"Round: {round}"
                 embed.set_image(url=e[i])
-                await msg.edit(view=view, embed=embed)
+                await msg.edit_message(view=view, embed=embed)
                 await asyncio.sleep(0.5)
                 print("think fast chucklenuts")
             await asyncio.sleep(0.5)
@@ -168,7 +161,7 @@ async def brick(ctx: commands.Context):
                 embed.description = f"Round: {round}\n imagine dying lmfao"
                 embed.set_image(url="https://github.com/Mythic4356/crost-bot/blob/main/bot-stuff/brick/images/heaven.jpg?raw=true")
                 brick_players.remove(ctx.user.id)
-            await msg.edit(view=view, embed=embed)
+            await msg.edit_message(view=view, embed=embed)
         
             print("---")
             print(parried)
@@ -177,10 +170,10 @@ async def brick(ctx: commands.Context):
             if win:
                 for i in range(7):
                     embed.set_image(url=e[i])
-                    await msg.edit(view=view,embed=embed)
+                    await msg.edit_message(view=view,embed=embed)
                     await asyncio.sleep(0.1)
                     print("rebound")
     else:
         print(brick_players)
-        await ctx.send("You already have an ongoing game!")
+        await ctx.response.send_message("You already have an ongoing game!")
 bot.run(TOKEN)

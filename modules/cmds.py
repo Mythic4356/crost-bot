@@ -6,7 +6,6 @@ from discord.ui import Button, View
 from discord import Interaction,app_commands
 from discord import InteractionResponseType, integrations
 from discord.abc import GuildChannel   
-from Constants import TimeLeft,brickImages
 import asyncio
 from PIL import ImageDraw, Image, ImageFont
 import requests
