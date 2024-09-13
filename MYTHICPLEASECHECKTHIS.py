@@ -10,7 +10,7 @@ from modules.Constants import TimeLeft,brickImages
 import asyncio
 from PIL import ImageDraw, Image, ImageFont
 import requests
-import db
+import modules.db
 
 try:
     TOKEN = os.environ["token"]
@@ -53,19 +53,22 @@ async def on_ready():
 @app_commands.user_install()
 @app_commands.allowed_installs(guilds=True, users=True)
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
-@bot.tree.command(description)
-async def check(description):
+@bot.tree.command(description="hehe")
+async def check(ctx:Interaction, description: str):
     if description == "ora":
         async def uwu(ctx:Interaction):
             print("ez")
             msg = await ctx.response.send_message("OwO")
+        await uwu(ctx)
     elif description =="show the site":
         async def sites(ctx:Interaction):
             print("ez")
             msg = await ctx.response.send_message("Visit us in\nhttps://mythic4356.github.io/crost-bot/")
+        await sites(ctx)
     elif description=="p i n g":
             async def ping(ctx: commands.Context):
                 msg =await ctx.response.send_message("Pong!")
+            await ping(ctx)
 #----------------------------------------------------------------------------------------------------
 
 
@@ -106,6 +109,7 @@ async def feed(ctx: commands.Context):
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @bot.hybrid_command(name="petpet",with_app_command= True, description="W.I.P")
 async def petpet(ctx: commands.Context, user: discord.Member = None):
+    print("yipe")
     pass
 
 brick_players = []
