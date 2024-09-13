@@ -7,10 +7,11 @@ from discord import Interaction,app_commands
 from discord import InteractionResponseType, integrations
 from discord.abc import GuildChannel   
 from modules.Constants import TimeLeft,brickImages
+from modules.cmds import *
 import asyncio
 from PIL import ImageDraw, Image, ImageFont
 import requests
-import db
+import modules.db
 
 try:
     TOKEN = os.environ["token"]
@@ -81,7 +82,7 @@ async def bake(ctx):
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @bot.hybrid_command(name="site",with_app_command= True, description="Visit Our Site!")
 async def site(ctx: commands.Context):
-    msg = await ctx.send("Visit us in\nhttps://mythic4356.github.io/crost-bot/")
+    modules.cmds.site()
 
 
 
