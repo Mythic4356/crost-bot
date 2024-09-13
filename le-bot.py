@@ -60,6 +60,15 @@ async def uwu(ctx:Interaction):
 @app_commands.user_install()
 @app_commands.allowed_installs(guilds=True, users=True)
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
+@bot.tree.command(description="show the site")
+async def sites(ctx:Interaction):
+    print("ez")
+    msg = await ctx.response.send_message("Visit us in\nhttps://mythic4356.github.io/crost-bot/")
+
+
+@app_commands.user_install()
+@app_commands.allowed_installs(guilds=True, users=True)
+@app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @bot.hybrid_command(name="bake")
 async def bake(ctx):
     userid = ctx.user.id
