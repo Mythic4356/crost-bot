@@ -10,7 +10,7 @@ from modules.Constants import TimeLeft,brickImages
 import asyncio
 from PIL import ImageDraw, Image, ImageFont
 import requests
-import modules.db
+from modules.db import load,save
 import aiohttp
 
 try:
@@ -32,8 +32,8 @@ bot.remove_command("help")
 client = discord.Client(intents=intents)
 
 def check(userid):
-    if modules.db.load(f"users/{userid}") == False:
-        modules.db.save(f"users/{userid}", 
+    if load(f"users/{userid}") == None:
+        save(f"users/{userid}", 
                 {
                     "croissants": 0
                 }
@@ -70,13 +70,23 @@ async def sites(ctx:Interaction):
 @app_commands.allowed_installs(guilds=True, users=True)
 @app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
 @bot.tree.command(name="bake")
-async def bake(ctx):
+async def bake(ctx: Interaction):
     userid = ctx.user.id
     check(userid)
-    modules.db.save(f"users/{userid}/croissants", (modules.db.load(f"users/{userid}/croissants") + 1))
+    baked = 1
+    await ctx.response.send_message(f"{ctx.user.mention} Baked {baked} :croissant:")
+    save(f"users/{userid}/croissants", (load(f"users/{userid}/croissants") + baked))
 
-
-
+@app_commands.user_install()
+@app_commands.allowed_installs(guilds=True, users=True)
+@app_commands.allowed_contexts(guilds=True, dms=True, private_channels=True)
+@bot.tree.command(name="bal")
+async def bal(ctx: Interaction, user:discord.Member = None):
+    if user == None:
+        user = ctx.user
+    userid=user.id
+    check(userid)
+    await ctx.response.send_message(f"{user.mention} has {load(f"users/{userid}/croissants")} :croissant: in their bakery!")
 
 
 @app_commands.user_install()
